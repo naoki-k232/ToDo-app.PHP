@@ -17,6 +17,6 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-// Route::get('/folders/{id}/tasks', 'TaskController@index')->name('tasks.index');
-Route::get('/', 'TaskController@index');
-Route::get('/index', 'TaskController@index');
+Route::get('/folders/{id}/tasks', 'TaskController@index')->name('tasks.index');
+// Route::get('/', 'TaskController@index');
+// Route::get('/index', 'TaskController@index');
