@@ -9,4 +9,8 @@ class Folder extends Model
 {
     // use HasFactory;
     // protected $table = 'folders';
+    public function tasks()
+    {
+        return $this->hasMany('App\Models\Task');
+    }
 }
