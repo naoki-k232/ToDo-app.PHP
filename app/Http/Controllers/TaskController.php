@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateTask;
+use App\Http\Requests\EditTask;
 use App\Models\Folder;
 use App\Models\Task;
 
@@ -48,6 +49,35 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index', [
             'id' => $current_folder->id,
+        ]);
+    }
+
+    /**
+     * GET /folders/{id}/tasks/{task_id}/edit.
+     */
+    public function showEditForm(int $id, int $task_id)
+    {
+        $task = Task::find($task_id);
+
+        return view('tasks/edit', [
+            'task' => $task,
+        ]);
+    }
+
+    public function edit(int $id, int $task_id, EditTask $request)
+    {
+        // 1 まずリクエストされた ID でタスクデータを取得します。これが編集対象となります。
+        $task = Task::find($task_id);
+
+        // 2 編集対象のタスクデータにん入力値を詰めて save します。
+        $task->title = $request->title;
+        $task->status = $request->status;
+        $task->due_date = $request->due_date;
+        $task->save();
+
+        // 3 最後に編集対象のタスクが属するタスク一覧画面へリダイレクトしています。
+        return redirect()->route('tasks.index', [
+            'id' => $task->folder_id,
         ]);
     }
 }
